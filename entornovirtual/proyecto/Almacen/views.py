@@ -49,3 +49,7 @@ def registrar_usuario(request):
     else:
         return render(request,template_registro)
     
+
+#Gestion a la tabla cursos
+def index(request):
+    return render(request,template_index)
