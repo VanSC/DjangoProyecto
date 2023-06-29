@@ -43,5 +43,11 @@ urlpatterns=[
     path('pedido/updatepedido/<codigo>',views.updatepedido),
     path('pedido/eliminarpedido/<codigo>',views.eliminarpedido),
 
+    path('salida',views.salida,name='salida'),
+    path('salida/registrarsalida',views.registrarsalida),
+    path('salida/edicionsalida/<codigo>',views.edicionsalida),
+    path('salida/updatesalida/<codigo>',views.updatesalida),
+    path('salida/eliminarsalida/<codigo>',views.eliminarsalida),
+
     #path("Inicio",views.index)
     ]

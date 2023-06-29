@@ -3,32 +3,45 @@
 <div class="row pt-3">
     <div class="col"></div>
     <div class="col">
-        <h5 class="text-center">Editar Ingreso de Producto</h5>
+        <h5 class="text-center">Editar Ingreso de Articulo</h5>
         <hr>
-        <form action="">
+        <form action="/ingreso/registraringreso" method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col">
                     <div>
-                        <label><em>Articulo:</em></label>
-                        <input type="text" name="txtCodigo_articulo" class="form-control">
+                        <label><em>Codigo:</em></label>
+                        <input type="text" readonly value="{{ingreso.codigo}}" name="txtCodigo" class="form-control">
+                    </div><br>
+                    <div>
+                        <select class="form-select" aria-label="Default select example" name="txtArticulo">
+                            <option selected value="{{ingreso.codigo_Articulo.codigo}}">{{ingreso.codigo_Articulo.nombre}}</option>
+                            {% for a in articulos %}
+                            <option value="{{a.codigo}}">{{a.nombre}}</option>
+                            {% endfor %}
+                        </select>
                     </div><br>
                     <div>
                         <label><em>Cantidad de Ingreso:</em></label>
-                        <input type="number" name="txtCant_art_ingresado" class="form-control">
+                        <input type="number" value="{{ingreso.cant_Art_Ingresados}}" name="txtCantidad" class="form-control">
                     </div><br>
                     <div>
                         <label><em>Fecha Ingresado:</em></label>
-                        <input type="datetime-local" name="txtFecha_ingreso" class="form-control">
+                        <input value="{{ingreso.fecha_Ingreso}}" type="text" name="txtFecha" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Usuario encargado:</em></label>
-                        <input type="text" name="txtUsuario_codigo" class="form-control">
-                    </div>
+                        <select class="form-select" aria-label="Default select example" name="txtUsuario">
+                            <option selected value="{{ingreso.codigo_Usuario.codigo}}">{{ingreso.codigo_Usuario.nombre}} {{ingreso.codigo_Usuario.apellido}}</option>
+                            {% for u in usuarios %}
+                            <option value="{{u.codigo}}">{{u.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
                 </div>
             </div>
             <hr>
             <div class="text-center d-grid gap-2 d-md-block">
-                <button class="btn btn-success" type="submit">Registrar</button>
+                <button class="btn btn-success" type="submit">Editar</button>
                 <button class="btn btn-danger" type="reset">Cancelar</button>
             </div>
             <hr>

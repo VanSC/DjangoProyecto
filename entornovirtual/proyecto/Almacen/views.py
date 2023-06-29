@@ -370,3 +370,56 @@ def eliminarpedido(request, codigo):
     pedido = Orden_Pedido.objects.get(codigo = codigo)
     pedido.delete()
     return redirect("/pedido")
+
+#Gestion a la tabla Salida
+template_gestion_salida="acciones/salida/GestionSalida.html"
+template_edit_salida="acciones/salida/edit_salida.html"
+
+def salida(request):
+    salidas = Orden_Salida.objects.all()
+    articulos = Articulo.objects.all()
+    usuarios = Usuario.objects.all()
+    context = {"salidas":salidas, "articulos":articulos, "usuarios":usuarios}
+    return render(request, template_gestion_salida, context)
+
+def edicionsalida(request, codigo):
+    salida = Orden_Salida.objects.get(codigo = codigo)
+    context = {"salida":salida}
+    return render(request, template_edit_salida, context)
+
+def updatesalida(request, codigo):
+    codigo = request.POST["txtCodigo"]
+    articulo = request.POST["txtArticulo"]
+    cantidad = request.POST["txtCantidad"]
+    fecha = request.POST["txtFecha"]
+    usuario =  request.POST["txtUsuario"]
+
+    salida = Orden_Salida.objects.get(codigo = codigo)
+
+    articulo_fk = Articulo.objects.get(codigo = articulo)
+    salida.codigo_Articulo = articulo_fk
+    usuario_fk = Usuario.objects.get(codigo = usuario)
+    salida.codigo_Usuario = usuario_fk
+
+    salida.cant_Art_Salida = cantidad
+
+    salida.save()
+    return redirect("/salida")
+
+def registrarsalida(request):
+    codigo = request.POST["txtCodigo"]
+    articulo = request.POST["txtArticulo"]
+    cantidad = request.POST["txtCantidad"]
+    fecha = request.POST["txtFecha"]
+    usuario =  request.POST["txtUsuario"]
+
+    articulo_fk = Articulo.objects.get(codigo = articulo)
+    usuario_fk = Usuario.objects.get(codigo = usuario)
+
+    salida = Orden_Salida.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Art_Salida=cantidad,fecha_Salida=fecha,codigo_Usuario=usuario_fk)
+    return redirect("/salida")
+
+def eliminarsalida(request, codigo):
+    salida = Orden_Salida.objects.get(codigo = codigo)
+    salida.delete()
+    return redirect("/salida")

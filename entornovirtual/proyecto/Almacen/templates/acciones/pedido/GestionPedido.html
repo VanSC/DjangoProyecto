@@ -2,9 +2,9 @@
 {% block content %}
 <div class="row pt-3">
     <div class="col-4 pt-3">
-        <h5 class="text-center">Registro de Pedido de Productos</h5>
+        <h5 class="text-center">Registro de Pedido de Articulos</h5>
         <hr>
-        <form action="/pedido/registrarpedido" method="post">
+        <form action="/pedido/updatepedido/{{pedido.codigo}}" method="post">
             {% csrf_token %}
             <div class="row">
                 <div class="col">
@@ -47,7 +47,7 @@
         </form>
     </div>
     <div class="col-8 pt-3 text-center">
-        <h5>Lista de Pedido de Productos</h5>
+        <h5>Lista de Pedido de Articulos</h5>
         <hr>
         <table class="table table-striped table-hover">
             <thead>
