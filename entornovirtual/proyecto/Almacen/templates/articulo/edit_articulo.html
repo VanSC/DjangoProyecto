@@ -11,36 +11,47 @@
     <div class="col-8 pt-3">
         <h5 class=" text-center">Editar Producto</h5>
         <hr>
-        <form action="">
+        <form action="/articulo/updatearticulo/{{articulo.codigo}}" method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col">
                     <div>
+                        <label><em>Codigo:</em></label>
+                        <input type="text" readonly name="txtCodigo"  value="{{articulo.codigo}}" class="form-control">
+                    </div><br>
+                    <div>
                         <label><em>Nombre:</em></label>
-                        <input type="text" name="txtNombre" class="form-control">
+                        <input type="text" name="txtNombre"  value="{{articulo.nombre}}" class="form-control">
                     </div><br>
                     <div>
                         <label><em>Stock:</em></label>
-                        <input type="number" name="txtStock" class="form-control">
+                        <input type="number" name="txtStock" value="{{articulo.stock}}" class="form-control">
                     </div>
                 </div>
                 <div class="col">
                     <br>
                     <div>
                         <select class="form-select" aria-label="Default select example" name="txtModelo">
-                            <option selected>Modelo</option>
-                            <option value="1">One</option>
+                            <option selected value="{{articulo.codigo_Modelo.codigo}}">{{articulo.codigo_Modelo.nombre}}</option>
+                            {% for m in modelos %}
+                            <option value="{{m.codigo}}">{{m.nombre}}</option>
+                            {% endfor %}
                           </select>
                     </div><br>
                     <div>
                         <select class="form-select" aria-label="Default select example" name="txtCategoria">
-                            <option selected>Categoria</option>
-                            <option value="1">One</option>
+                            <option selected value="{{articulo.codigo_Categoria.codigo}}">{{articulo.codigo_Categoria.nombre}}</option>
+                            {% for c in categorias %}
+                            <option value="{{c.codigo}}">{{c.nombre}}</option>
+                            {% endfor %}
                           </select>
                     </div><br>
                     <div>
                         <select class="form-select" aria-label="Default select example" name="txtMarca">
-                            <option selected>Marca</option>
-                            <option value="1">One</option>
+                            <option selected value="{{articulo.codigo_Marca.codigo}}">{{articulo.codigo_Marca.nombre}}</option>
+                            {% for mc in marcas %}
+                            <option value="{{mc.codigo}}">{{mc.nombre}}</option>
+                            {% endfor %}
                           </select>
                     </div>
                 </div>

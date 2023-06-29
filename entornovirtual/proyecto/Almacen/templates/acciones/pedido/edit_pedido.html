@@ -5,25 +5,38 @@
     <div class="col">
         <h5 class="text-center">Editar Pedido de Producto</h5>
         <hr>
-        <form action="">
+        <form action="/pedido/registrarpedido" method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col">
                     <div>
-                        <label><em>Articulo:</em></label>
-                        <input type="text" name="txtCodigo_articulo" class="form-control">
+                        <label><em>Codigo:</em></label>
+                        <input type="text" value="{{pedido.codigo}}" readonly name="txtCodigo" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Cantidad de Pedido:</em></label>
-                        <input type="number" name="txtCant_art_pedido" class="form-control">
+                        <select class="form-select" aria-label="Default select example" name="txtArticulo">
+                            <option selected value="{{pedido.codigo_Articulo.codigo}}">{{pedido.codigo_Articulo.nombre}}</option>
+                            {% for a in articulos %}
+                            <option value="{{a.codigo}}">{{a.nombre}}</option>
+                            {% endfor %}
+                        </select>
                     </div><br>
                     <div>
-                        <label><em>Fecha Pedido:</em></label>
-                        <input type="datetime-local" name="txtFecha_pedido" class="form-control">
+                        <label><em>Cantidad de pedido:</em></label>
+                        <input value="{{pedido.cant_Solicitada}}" type="number" name="txtCantidad" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Usuario encargado:</em></label>
-                        <input type="text" name="txtUsuario_codigo" class="form-control">
-                    </div>
+                        <label><em>Fecha Pedido</p></em></label>
+                        <input value="{{pedido.fecha_Solicitud}}" type="text" name="txtFecha" class="form-control">
+                    </div><br>
+                    <div>
+                        <select class="form-select" aria-label="Default select example" name="txtUsuario">
+                            <option selected value="{{pedido.codigo_Usuario.nombre}}">{{pedido.codigo_Usuario.nombre}}</option>
+                            {% for u in usuarios %}
+                            <option value="{{u.codigo}}">{{u.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
                 </div>
             </div>
             <hr>

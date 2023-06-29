@@ -4,7 +4,8 @@
     <div class="col-4 pt-3">
         <h5 class=" text-center">Registro Modelo</h5>
         <hr>
-        <form action="">
+        <form action="/modelo/registrarmodelo" method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col">
                     <div>
@@ -26,7 +27,7 @@
         </form>
     </div>
     <div class="col-8 pt-3 text-center">
-        <h5>Lista de Modelos de Producto</h5>
+        <h5>Lista de Modelos de Articulo</h5>
         <hr>
         <table class="table table-striped table-hover">
             <thead>
@@ -37,12 +38,13 @@
                 </tr>
             </thead>
             <tbody>
+                {% for mod in modelos %}
                 <tr>
-                    <th scope="row">col 1</th>
-                    <td>col 2</td>
+                    <th scope="row">{{mod.codigo}}</th>
+                    <td>{{mod.nombre}}</td>
                     <td>
                         <button type="button" class="btn btn-light">
-                            <a href="#">
+                            <a class="editar" href="/modelo/edicionmodelo/{{mod.codigo}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
                                     <path
@@ -53,7 +55,7 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-light">
-                            <a href="#">
+                            <a class="eliminar" href="/modelo/eliminarmodelo/{{mod.codigo}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                     <path
@@ -63,6 +65,7 @@
                         </button>
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

@@ -4,7 +4,8 @@
     <div class="col-4 pt-3">
         <h5 class="text-center">Registro de Salida de Productos</h5>
         <hr>
-        <form action="">
+        <form action="/ingreso/registrarsalida" method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col">
                     <div>
@@ -12,21 +13,29 @@
                         <input type="text" name="txtCodigo" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Articulo:</em></label>
-                        <input type="text" name="txtCodigo_articulo" class="form-control">
+                        <select class="form-select" aria-label="Default select example" name="txtArticulo">
+                            <option selected>Articulos</option>
+                            {% for a in articulos %}
+                            <option value="{{a.codigo}}">{{a.nombre}}</option>
+                            {% endfor %}
+                        </select>
                     </div><br>
                     <div>
                         <label><em>Cantidad de Salida:</em></label>
-                        <input type="number" name="txtCant_art_salida" class="form-control">
+                        <input type="number" name="txtCantidad" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Fecha Salida:</em></label>
-                        <input type="datetime-local" name="txtFecha_salida" class="form-control">
+                        <label><em>Fecha Salida</p>:</em></label>
+                        <input type="datetime-local" name="txtFecha" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Usuario encargado:</em></label>
-                        <input type="text" name="txtUsuario_codigo" class="form-control">
-                    </div>
+                        <select class="form-select" aria-label="Default select example" name="txtUsuario">
+                            <option selected>Usuario</option>
+                            {% for u in usuarios %}
+                            <option value="{{u.codigo}}">{{u.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
                 </div>
             </div>
             <hr>

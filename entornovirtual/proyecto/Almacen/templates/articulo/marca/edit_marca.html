@@ -1,4 +1,5 @@
 {% extends 'base/index.html' %}
+{% block title%}Editar Marca{% endblock %}
 {% block content %}
 <div class="row pt-3">
     <div class="col-4">
@@ -9,16 +10,21 @@
         </figure>
     </div>
     <div class="col-8 pt-3">
-        <h5 class=" text-center">Editar Marca</h5>
+        <h5 class=" text-center">Editar Marca {{marca.codigo}} </h5>
         <hr>
         <form action="">
             <div class="row">
+                <div class="col"></div>
                 <div class="col">
+                    <div>
+                        <label><em>Codigo:</em></label>
+                        <input type="text" readonly value="{{marca.codigo}}" name="txtCodigo" class="form-control">
+                    </div>
                 </div>
                 <div class="col">
                     <div>
                         <label><em>Nombre:</em></label>
-                        <input type="text" name="txtNombre" class="form-control">
+                        <input type="text" value="{{marca.nombre}}" name="txtNombre" class="form-control">
                     </div>
                 </div>
                 <div class="col"></div>

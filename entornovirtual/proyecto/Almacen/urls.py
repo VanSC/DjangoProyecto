@@ -31,5 +31,17 @@ urlpatterns=[
     path('articulo/updatearticulo/<codigo>',views.updatearticulo),
     path('articulo/eliminararticulo/<codigo>',views.eliminararticulo),
 
-    path("Inicio",views.index)
+    path('ingreso',views.ingreso,name='ingreso'),
+    path('ingreso/registraringreso',views.registraringreso),
+    path('ingreso/edicioningreso/<codigo>',views.edicioningreso),
+    path('ingreso/updateingreso/<codigo>',views.updateingreso),
+    path('ingreso/eliminaringreso/<codigo>',views.eliminaringreso),
+
+    path('pedido',views.pedido,name='pedido'),
+    path('pedido/registrarpedido',views.registrarpedido),
+    path('pedido/edicionpedido/<codigo>',views.edicionpedido),
+    path('pedido/updatepedido/<codigo>',views.updatepedido),
+    path('pedido/eliminarpedido/<codigo>',views.eliminarpedido),
+
+    #path("Inicio",views.index)
     ]

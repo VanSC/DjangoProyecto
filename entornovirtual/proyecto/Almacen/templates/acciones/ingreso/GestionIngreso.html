@@ -2,9 +2,10 @@
 {% block content %}
 <div class="row pt-3">
     <div class="col-4 pt-3">
-        <h5 class="text-center">Registro de Ingresos de Productos</h5>
+        <h5 class="text-center">Registro de Ingreso de Articulo</h5>
         <hr>
-        <form action="">
+        <form action="/ingreso/registraringreso" method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col">
                     <div>
@@ -12,21 +13,29 @@
                         <input type="text" name="txtCodigo" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Articulo:</em></label>
-                        <input type="text" name="txtCodigo_articulo" class="form-control">
+                        <select class="form-select" aria-label="Default select example" name="txtArticulo">
+                            <option selected>Articulos</option>
+                            {% for a in articulos %}
+                            <option value="{{a.codigo}}">{{a.nombre}}</option>
+                            {% endfor %}
+                        </select>
                     </div><br>
                     <div>
                         <label><em>Cantidad de Ingreso:</em></label>
-                        <input type="number" name="txtCant_art_ingresado" class="form-control">
+                        <input type="number" name="txtCantidad" class="form-control">
                     </div><br>
                     <div>
                         <label><em>Fecha Ingresado:</em></label>
-                        <input type="datetime-local" name="txtFecha_ingreso" class="form-control">
+                        <input type="datetime-local" name="txtFecha" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Usuario encargado:</em></label>
-                        <input type="text" name="txtUsuario_codigo" class="form-control">
-                    </div>
+                        <select class="form-select" aria-label="Default select example" name="txtUsuario">
+                            <option selected>Usuario</option>
+                            {% for u in usuarios %}
+                            <option value="{{u.codigo}}">{{u.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
                 </div>
             </div>
             <hr>
@@ -38,7 +47,7 @@
         </form>
     </div>
     <div class="col-8 pt-3 text-center">
-        <h5>Lista de Ingresos de Productos</h5>
+        <h5>Lista de Ingresos de Articulos</h5>
         <hr>
         <table class="table table-striped table-hover">
             <thead>
@@ -52,15 +61,16 @@
                 </tr>
             </thead>
             <tbody>
+                {% for i in ingresos %}
                 <tr>
-                    <th scope="row">col 1</th>
-                    <td>col 2</td>
-                    <td>col 3</td>
-                    <td>col 4</td>
-                    <td>col 5</td>
+                    <th scope="row">{{i.codigo}}</th>
+                    <td>{{i.codigo_Articulo}}</td>
+                    <td>{{i.cant_Art_Ingresados}}</td>
+                    <td>{{i.fecha_Ingreso}}</td>
+                    <td>{{i.codigo_Usuario}}</td>
                     <td>
                         <button type="button" class="btn btn-light">
-                            <a href="#">
+                            <a class="editar" href="/ingreso/edicioningreso/{{i.codigo}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
                                     <path
@@ -71,7 +81,7 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-light">
-                            <a href="#">
+                            <a class="eliminar" href="/ingreso/eliminaringreso/{{i.codigo}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                     <path
@@ -81,6 +91,7 @@
                         </button>
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

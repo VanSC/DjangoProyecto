@@ -1,4 +1,5 @@
 {% extends 'base/index.html' %}
+{% block title%}Editar categoria{% endblock %}
 {% block content %}
 <div class="row pt-3">
     <div class="col-4">
@@ -9,20 +10,24 @@
         </figure>
     </div>
     <div class="col-8 pt-3">
-        <h5 class=" text-center">Editar Categoria</h5>
+        <h5 class=" text-center">Editar Categoria {{categoria.nombre}}</h5>
         <hr>
-        <form action="">
+        <form action="categoria/updatecategoria/categoria.codigo">
             <div class="row">
                 <div class="col">
                     <div>
+                        <label><em>Codigo:</em></label>
+                        <input type="text" value="{{categoria.codigo}}" name="txtCodigo" class="form-control">
+                    </div><br>
+                    <div>
                         <label><em>Nombre:</em></label>
-                        <input type="text" name="txtNombre" class="form-control">
+                        <input type="text" value="{{categoria.nombre}}" name="txtNombre" class="form-control">
                     </div><br>
                 </div>
                 <div class="col">
                     <div>
                         <label><em>Descripcion:</em></label>
-                        <textarea type="text" name="txtDescripcion" class="form-control"></textarea>
+                        <textarea type="text" name="txtDescripcion" value="{{categoria.descripcion}}" class="form-control">{{categoria.descripcion}}</textarea>
                     </div>
                 </div>
             </div>

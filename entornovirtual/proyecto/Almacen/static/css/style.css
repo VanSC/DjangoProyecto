@@ -1,0 +1,18 @@
+h4{
+    color:rgb(116, 115, 115);
+}
+h6{
+  color: rgb(183, 183, 183);
+}
+
+p{
+    font-size: 0.65rem;
+}
+.editar{
+    text-decoration: none;
+    color: rgb(125, 92, 129);
+}
+.eliminar{
+    text-decoration: none;
+    color: brown;
+}

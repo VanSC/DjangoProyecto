@@ -2,11 +2,16 @@
 {% block content %}
 <div class="row pt-3">
     <div class="col-4 pt-3">
-        <h5 class=" text-center">Registro Producto</h5>
+        <h5 class=" text-center">Registro Articulo</h5>
         <hr>
-        <form action="">
+        <form action="/articulo/registrararticulo" method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col">
+                    <div>
+                        <label><em>Codigo:</em></label>
+                        <input type="text" name="txtCodigo" class="form-control">
+                    </div><br>
                     <div>
                         <label><em>Nombre:</em></label>
                         <input type="text" name="txtNombre" class="form-control">
@@ -21,19 +26,25 @@
                     <div>
                         <select class="form-select" aria-label="Default select example" name="txtModelo">
                             <option selected>Modelo</option>
-                            <option value="1">One</option>
+                            {% for m in modelos %}
+                            <option value="{{m.codigo}}">{{m.nombre}}</option>
+                            {% endfor %}
                           </select>
                     </div><br>
                     <div>
                         <select class="form-select" aria-label="Default select example" name="txtCategoria">
                             <option selected>Categoria</option>
-                            <option value="1">One</option>
+                            {% for c in categorias %}
+                            <option value="{{c.codigo}}">{{c.nombre}}</option>
+                            {% endfor %}
                           </select>
                     </div><br>
                     <div>
                         <select class="form-select" aria-label="Default select example" name="txtMarca">
                             <option selected>Marca</option>
-                            <option value="1">One</option>
+                            {% for ma in marcas %}
+                            <option value="{{ma.codigo}}">{{ma.nombre}}</option>
+                            {% endfor %}
                           </select>
                     </div>
                 </div>
@@ -47,7 +58,7 @@
         </form>
     </div>
     <div class="col-8 pt-3 text-center">
-        <h5>Lista de Productos</h5>
+        <h5>Lista de Articulos</h5>
         <hr>
         <table class="table table-striped table-hover">
             <thead>
@@ -63,15 +74,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">col 1</th>
-                    <td>col 2</td>
-                    <td>col 3</td>
-                    <td>col 4</td>
-                    <td>col 5</td>
-                    <td>col 6</td>
+                    {% for a in articulos %}
+                    <th scope="row">{{a.codigo}}</th>
+                    <td>{{a.nombre}}</td>
+                    <td>{{a.stock}}</td>
+                    <td>{{a.codigo_Modelo.nombre}}</td>
+                    <td>{{a.codigo_Marca.nombre}}</td>
+                    <td>{{a.codigo_Categoria.nombre}}</td>
                     <td>
                         <button type="button" class="btn btn-light">
-                            <a href="#">
+                            <a class="editar" href="/articulo/edicionarticulo/{{a.codigo}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
                                     <path
@@ -82,7 +94,7 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-light">
-                            <a href="#">
+                            <a class="eliminar" href="/articulo/eliminararticulo/{{a.codigo}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                     <path
@@ -92,6 +104,7 @@
                         </button>
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

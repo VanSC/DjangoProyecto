@@ -1,18 +1,12 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inicio</title>
+    <title>{% block title%}Inicio{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <style>
-    h4{
-        color:rgb(116, 115, 115);
-    }
-    h6{
-      color: rgb(183, 183, 183);
-    }
-  </style>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
   <body class="container">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -24,21 +18,21 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                <a class="nav-link active" aria-current="page" href="/articulo">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Producto</a>
+                <a class="nav-link active" aria-current="page" href="/articulo">Articulo</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Modulos Producto
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Categoria producto</a></li>
+                  <li><a class="dropdown-item" href="/categoria">Categoria producto</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Modelo producto</a></li>
+                  <li><a class="dropdown-item" href="/modelo">Modelo producto</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Marca producto</a></li>
+                  <li><a class="dropdown-item" href="/marca">Marca producto</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -46,15 +40,15 @@
                   Acciones Almacen
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Entrada de productos</a></li>
+                  <li><a class="dropdown-item" href="/ingreso">Entrada de productos</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Salida de productos</a></li>
+                  <li><a class="dropdown-item" href="/salida">Salida de productos</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Solicitud de pedido</a></li>
+                  <li><a class="dropdown-item" href="/pedido">Solicitud de pedido</a></li>
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Salir</a>
+                <a class="nav-link active" aria-current="page" href="/">Salir</a>
               </li>
             </ul>
             <form class="d-flex" role="search">
