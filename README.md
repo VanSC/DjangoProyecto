@@ -2,4 +2,4 @@
 ### tecnologia - Django
 
 #### - Modelo entidad relacion - terminado
-#### crud completado de todas las entidades
+#### - crud completado de todas las entidades
