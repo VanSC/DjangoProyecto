@@ -28,7 +28,6 @@ class Articulo(models.Model):
     stock=models.IntegerField()
     codigo_Modelo = models.ForeignKey(Modelo, on_delete=models.CASCADE)
     codigo_Marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
-    codigo_Modelo = models.ForeignKey(Modelo, on_delete=models.CASCADE)
     codigo_Categoria=models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
 class Orden_Ingreso(models.Model):

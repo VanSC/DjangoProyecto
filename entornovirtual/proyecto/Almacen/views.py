@@ -4,7 +4,7 @@ from pyexpat.errors import messages
 
 template_login="usuario/login.html"
 template_registro = "usuario/registro.html"
-template_index="producto/GestionProducto.html"
+template_index="inicio.html"
 ##VISTAS
 
 #Acciones
