@@ -1,28 +1,49 @@
 {% extends 'base/index.html' %}
 {% block content %}
 <div class="row pt-3">
-    <div class="col-4">
-        <figure class="figure">
-            <img src="https://img.pikbest.com/png-images/qiantu/mbe-style-daily-necessities-electronic-products-cartoon-cute-set-of-pictures_2577475.png!w700wp"
-                class="figure-img img-fluid rounded" alt="...">
-            <figcaption class="figure-caption text-end">Productos de TI.</figcaption>
-        </figure>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" class="btn btn-outline-secondary">Añadir producto</button>
-        </div>
+    <div class="col-4 pt-3">
+        <h5 class="text-center">Registro de Salida de Productos</h5>
+        <hr>
+        <form action="">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <label><em>Articulo:</em></label>
+                        <input type="text" name="txtCodigo_articulo" class="form-control">
+                    </div><br>
+                    <div>
+                        <label><em>Cantidad de Salida:</em></label>
+                        <input type="number" name="txtCant_art_salida" class="form-control">
+                    </div><br>
+                    <div>
+                        <label><em>Fecha Salida:</em></label>
+                        <input type="datetime-local" name="txtFecha_salida" class="form-control">
+                    </div><br>
+                    <div>
+                        <label><em>Usuario encargado:</em></label>
+                        <input type="text" name="txtUsuario_codigo" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center d-grid gap-2 d-md-block">
+                <button class="btn btn-success" type="submit">Registrar</button>
+                <button class="btn btn-danger" type="reset">Cancelar</button>
+            </div>
+            <hr>
+        </form>
     </div>
     <div class="col-8 pt-3 text-center">
-        <h5>Lista de Productos</h5>
+        <h5>Lista de Salida de Productos</h5>
         <hr>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Modelo</th>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Marca</th>
+                    <th scope="col">Articulo</th>
+                    <th scope="col">Cantidad Pedido</th>
+                    <th scope="col">Fecha Ingreso</th>
+                    <th scope="col">Encargado/Responsable</th>
                     <th scope="col" colspan="2">Acciones</th>
                 </tr>
             </thead>
@@ -33,7 +54,6 @@
                     <td>col 3</td>
                     <td>col 4</td>
                     <td>col 5</td>
-                    <td>col 6</td>
                     <td>
                         <button type="button" class="btn btn-light">
                             <a href="#">

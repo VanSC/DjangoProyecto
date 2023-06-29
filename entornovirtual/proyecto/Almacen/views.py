@@ -4,7 +4,9 @@ from pyexpat.errors import messages
 
 template_login="usuario/login.html"
 template_registro = "usuario/registro.html"
-template_index="producto/registro_modelo.html"
+template_index="producto/GestionProducto.html"
+#"acciones/ingreso/edit_ingreso.html"
+#"producto/lista_modelo.html"
 #"base/index.html"
 ##validacion de usuario y registro
 

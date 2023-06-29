@@ -1,0 +1,57 @@
+{% extends 'base/index.html' %}
+{% block content %}
+<div class="row pt-3">
+    <div class="col-4">
+        <figure class="figure">
+            <img src="https://img.pikbest.com/png-images/qiantu/mbe-style-daily-necessities-electronic-products-cartoon-cute-set-of-pictures_2577475.png!w700wp"
+                class="figure-img img-fluid rounded" alt="...">
+            <figcaption class="figure-caption text-end">Productos de TI.</figcaption>
+        </figure>
+    </div>
+    <div class="col-8 pt-3">
+        <h5 class=" text-center">Editar Producto</h5>
+        <hr>
+        <form action="">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <label><em>Nombre:</em></label>
+                        <input type="text" name="txtNombre" class="form-control">
+                    </div><br>
+                    <div>
+                        <label><em>Stock:</em></label>
+                        <input type="number" name="txtStock" class="form-control">
+                    </div>
+                </div>
+                <div class="col">
+                    <br>
+                    <div>
+                        <select class="form-select" aria-label="Default select example" name="txtModelo">
+                            <option selected>Modelo</option>
+                            <option value="1">One</option>
+                          </select>
+                    </div><br>
+                    <div>
+                        <select class="form-select" aria-label="Default select example" name="txtCategoria">
+                            <option selected>Categoria</option>
+                            <option value="1">One</option>
+                          </select>
+                    </div><br>
+                    <div>
+                        <select class="form-select" aria-label="Default select example" name="txtMarca">
+                            <option selected>Marca</option>
+                            <option value="1">One</option>
+                          </select>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-success" type="submit">Registrar</button>
+                <button class="btn btn-danger" type="reset">Cancelar</button>
+            </div>
+            <hr>
+        </form>
+    </div>
+</div>
+{% endblock %}
