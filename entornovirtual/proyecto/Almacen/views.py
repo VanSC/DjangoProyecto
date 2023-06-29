@@ -5,9 +5,36 @@ from pyexpat.errors import messages
 template_login="usuario/login.html"
 template_registro = "usuario/registro.html"
 template_index="producto/GestionProducto.html"
-#"acciones/ingreso/edit_ingreso.html"
-#"producto/lista_modelo.html"
-#"base/index.html"
+##VISTAS
+
+#Acciones
+#acciones/ingreso/GestionIngreso.html
+#acciones/ingreso/edit_ingreso.html
+
+#acciones/pedido/GestionPedido.html
+#acciones/pedido/edit_pedido.html
+
+#acciones/pedido/GestionSalida.html
+#acciones/pedido/edit_salida.html
+
+##Productos 
+#producto/GestionProducto.html
+#producto/edit_producto.html
+
+### Categoria
+#producto/categoria/GestionCategoria.html
+#producto/categoria/editCategoria.html
+
+### Marca
+#producto/marca/GestionMarca.html
+#producto/marca/edit_marca.html
+
+### Modelo
+#producto/modelo/GestionModelo.html
+#producto/modelo/edit_modelo.html
+
+
+
 ##validacion de usuario y registro
 
 def login_usuario(request):
