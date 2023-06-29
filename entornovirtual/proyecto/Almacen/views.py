@@ -2,9 +2,10 @@ from django.shortcuts import redirect, render
 from .models import Usuario
 from pyexpat.errors import messages
 
-template_login="login.html"
-template_registro = "registro.html"
-template_index="index.html"
+template_login="usuario/login.html"
+template_registro = "usuario/registro.html"
+template_index="producto/registro_producto.html"
+#"base/index.html"
 ##validacion de usuario y registro
 
 def login_usuario(request):

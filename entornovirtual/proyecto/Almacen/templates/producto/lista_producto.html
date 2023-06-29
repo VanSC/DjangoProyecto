@@ -1,0 +1,44 @@
+{% extends 'base/index.html' %}
+{% block content %}
+<div class="row pt-3">
+    <div class="col-4">
+        <figure class="figure">
+            <img src="https://img.pikbest.com/png-images/qiantu/mbe-style-daily-necessities-electronic-products-cartoon-cute-set-of-pictures_2577475.png!w700wp"
+                class="figure-img img-fluid rounded" alt="...">
+            <figcaption class="figure-caption text-end">Productos de TI.</figcaption>
+        </figure>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-outline-secondary">Añadir producto</button>
+        </div>
+    </div>
+    <div class="col-8 pt-3 text-center">
+        <h5>Lista de Productos</h5>
+        <hr>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col" colspan="2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">col 1</th>
+                    <td>col 2</td>
+                    <td>col 3</td>
+                    <td>col 4</td>
+                    <td>col 5</td>
+                    <td>col 6</td>
+                    <td>Editar</td>
+                    <td>Eliminar</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
