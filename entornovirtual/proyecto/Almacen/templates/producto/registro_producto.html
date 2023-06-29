@@ -8,19 +8,50 @@
             <figcaption class="figure-caption text-end">Productos de TI.</figcaption>
         </figure>
     </div>
-    <div class="col-8 pt-3 text-center">
-        <h5>Registro Producto</h5>
+    <div class="col-8 pt-3">
+        <h5 class=" text-center">Registro Producto</h5>
         <hr>
-        <div class="col-8 card">
-            <form action="">
-                    <table class="table table-success table-striped-columns">
-                        <tr>
-                            <td>Nombre</td>
-                            <td><input type="text" name="" class="form-control" ></td>
-                        </tr>
-                    </table>
-            </form>
-        </div>
+        <form action="">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <label><em>Nombre:</em></label>
+                        <input type="text" name="txtNombre" class="form-control">
+                    </div>
+                    <div>
+                        <label><em>Stock:</em></label>
+                        <input type="text" name="txtStock" class="form-control">
+                    </div>
+                </div>
+                <div class="col">
+                    <br>
+                    <div>
+                        <select class="form-select" aria-label="Default select example" name="txtModelo">
+                            <option selected>Modelo</option>
+                            <option value="1">One</option>
+                          </select>
+                    </div><br>
+                    <div>
+                        <select class="form-select" aria-label="Default select example" name="txtCategoria">
+                            <option selected>Categoria</option>
+                            <option value="1">One</option>
+                          </select>
+                    </div><br>
+                    <div>
+                        <select class="form-select" aria-label="Default select example" name="txtMarca">
+                            <option selected>Marca</option>
+                            <option value="1">One</option>
+                          </select>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-success" type="submit">Registrar</button>
+                <button class="btn btn-danger" type="reset">Cancelar</button>
+            </div>
+            <hr>
+        </form>
     </div>
 </div>
 {% endblock %}
