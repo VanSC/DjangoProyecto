@@ -69,6 +69,7 @@ def login_usuario(request):
 #registro usuario
 def registrar_usuario(request):
     if request.method == 'POST':
+        codigo = request.POST["txtCodigo"]
         username = request.POST["txtUsuario"]
         name = request.POST["txtNombre"]
         lastname = request.POST["txtApellido"]
@@ -81,7 +82,7 @@ def registrar_usuario(request):
                 message = {"msg":"usuario existe"}
                 return render(request,template_registro,message)
             else:
-                user = Usuario.objects.create(nombreusuario=username,nombre=name,apellido=lastname,email=email,contraseña=password1)
+                user = Usuario.objects.create(codigo=codigo,nombreusuario=username,nombre=name,apellido=lastname,email=email,contraseña=password1)
                 user.save()
                 context = {"msg":"usuario correcto"}
                 return render(request,template_login,context)

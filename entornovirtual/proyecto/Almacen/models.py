@@ -53,7 +53,8 @@ class Orden_Ingreso(models.Model):
     codigo_Usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.codigo_Articulo
+        cod = str(self.codigo_Articulo)
+        return cod
 
 class Orden_Pedido(models.Model):
     codigo=models.CharField(primary_key=True, max_length=6)
@@ -63,7 +64,8 @@ class Orden_Pedido(models.Model):
     codigo_Usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.codigo_Articulo
+        cod = str(self.codigo_Articulo)
+        return cod
 
 class Orden_Salida(models.Model):
     codigo=models.CharField(primary_key=True, max_length=6)
@@ -73,5 +75,6 @@ class Orden_Salida(models.Model):
     codigo_Usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.codigo_Articulo
+        cod = str(self.codigo_Articulo)
+        return cod
 

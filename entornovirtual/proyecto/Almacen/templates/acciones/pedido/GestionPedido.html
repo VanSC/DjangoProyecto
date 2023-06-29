@@ -4,7 +4,7 @@
     <div class="col-4 pt-3">
         <h5 class="text-center">Registro de Pedido de Articulos</h5>
         <hr>
-        <form action="/pedido/updatepedido/{{pedido.codigo}}" method="post">
+        <form action="/pedido/registrarpedido" method="post">
             {% csrf_token %}
             <div class="row">
                 <div class="col">
@@ -67,7 +67,7 @@
                     <td>{{p.codigo_Articulo}}</td>
                     <td>{{p.cant_Solicitada}}</td>
                     <td>{{p.fecha_Solicitud}}</td>
-                    <td>{{p.codigo_Usuario}}</td>
+                    <td>{{p.codigo_Usuario.nombreusuario}}</td>
                     <td>
                         <button type="button" class="btn btn-light">
                             <a class="editar" href="/pedido/edicionpedido/{{p.codigo}}">
