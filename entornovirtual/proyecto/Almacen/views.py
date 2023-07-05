@@ -505,23 +505,40 @@ def eliminarsalida(request, codigo):
 ## consultas para reportes
 @login_required
 def reporteingreso(request):
+    fingreso = request.POST.get("txtfingreso")
     #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
     reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value')
+
+    if fingreso:
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value').filter(orden_ingreso__fecha_Ingreso__month = fingreso).distinct()
+        #reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value').filter(orden_ingreso__fecha_Ingreso__month='07') 
+    
     context = {"reporte":reporte}
     return render(request, template_reporte_ingresos, context)   
 
 
 @login_required
 def reportepedido(request):
+    fpedido = request.POST.get("txtfpedido")
     #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
     reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value')
+    
+    if fpedido:
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value').filter(orden_pedido__fecha_Solicitud__month = fpedido).distinct()
+    
     context = {"reporte":reporte}
     return render(request, template_reporte_pedidos, context)
 
 
 @login_required
 def reportesalida(request):
+    fsalida = request.POST.get("txtfsalida")
     #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
     reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value')
+    
+    if fsalida:
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value').filter(orden_salida__fecha_Salida__month = fsalida).distinct()
+    
+    
     context = {"reporte":reporte}
     return render(request, template_reporte_salidas, context)

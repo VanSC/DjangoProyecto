@@ -4,6 +4,21 @@
 
     <div class="col-8 pt-3 text-center">
         <h5>Lista de Ingresos totales</h5>
+        <form method="POST">
+            {% csrf_token %}
+            <table class="table">
+                <td>
+                    <div class="form-control">
+                        Fecha Salida: <input type="text" name="txtfsalida" value="{{ request.POST.fsalida }}"></imput>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-control">
+                        <button type="submit" class="btn btn-success form-control" >Buscar</button>
+                    </div>
+                </td>
+            </table>
+        </form>
         <hr>
         <table class="table table-striped table-hover">
             <thead>

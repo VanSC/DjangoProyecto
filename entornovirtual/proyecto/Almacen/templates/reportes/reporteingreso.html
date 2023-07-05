@@ -5,6 +5,22 @@
     <div class="col-8 pt-3 text-center">
         <h5>Lista de Ingresos totales</h5>
         <hr>
+        <h2>Lista de datos</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <table class="table">
+                    <td>
+                        <div class="form-control">
+                            Fecha Ingreso: <input type="text" name="txtfingreso" value="{{ request.POST.fingreso }}"></imput>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-control">
+                            <button type="submit" class="btn btn-success form-control" >Buscar</button>
+                        </div>
+                    </td>
+                </table>
+            </form>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
