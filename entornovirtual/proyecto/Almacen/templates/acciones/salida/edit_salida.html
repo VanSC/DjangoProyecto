@@ -30,6 +30,10 @@
                         <input value="{{salida.fecha_Salida}}" type="text" name="txtFecha" class="form-control">
                     </div><br>
                     <div>
+                        <label><em>Hora Ingresado:</em></label>
+                        <input value="{{salida.hora_Salida}}" type="text" name="txtHora" class="form-control">
+                    </div><br>
+                    <div>
                         <select class="form-select" aria-label="Default select example" name="txtUsuario">
                             <option selected value="{{salida.codigo_Usuario.codigo}}">{{salida.codigo_Usuario.nombre}} {{salida.codigo_Usuario.apellido}}</option>
                             {% for u in usuarios %}

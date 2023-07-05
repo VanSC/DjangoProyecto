@@ -5,7 +5,7 @@
     <div class="col">
         <h5 class="text-center">Editar Ingreso de Articulo</h5>
         <hr>
-        <form action="/ingreso/registraringreso" method="post">
+        <form action="/ingreso/updateingreso/{{ingreso.codigo}}" method="post">
             {% csrf_token %}
             <div class="row">
                 <div class="col">
@@ -28,6 +28,10 @@
                     <div>
                         <label><em>Fecha Ingresado:</em></label>
                         <input value="{{ingreso.fecha_Ingreso}}" type="text" name="txtFecha" class="form-control">
+                    </div><br>
+                    <div>
+                        <label><em>Hora Ingresado:</em></label>
+                        <input value="{{ingreso.hora_Ingreso}}" type="text" name="txtHora" class="form-control">
                     </div><br>
                     <div>
                         <select class="form-select" aria-label="Default select example" name="txtUsuario">

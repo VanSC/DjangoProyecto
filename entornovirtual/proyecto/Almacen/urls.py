@@ -4,8 +4,10 @@ from .import views
 urlpatterns=[
 
     #login
-    path("",views.login_usuario),
-    path("RegistroUsuario",views.registrar_usuario),
+    #path("",views.login_usuario),
+    #path("RegistroUsuario",views.registrar_usuario),
+    path('',views.articulo,name="inicio"),
+    path('salir/',views.salir,name='salir'),
 
     path('marca',views.marca,name='marca'),
     path('marca/registrarmarca',views.registrarmarca),
@@ -48,6 +50,8 @@ urlpatterns=[
     path('salida/edicionsalida/<codigo>',views.edicionsalida),
     path('salida/updatesalida/<codigo>',views.updatesalida),
     path('salida/eliminarsalida/<codigo>',views.eliminarsalida),
+
+    path('reporte',views.reporte,name='reporte'),
 
     #path("Inicio",views.index)
     ]

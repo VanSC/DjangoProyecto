@@ -1,6 +1,9 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from .models import Usuario, Marca, Modelo, Categoria, Articulo, Orden_Ingreso, Orden_Pedido, Orden_Salida
 from pyexpat.errors import messages
+from django.db.models import Avg, Max, Count, Sum, Q, F
 
 template_login="usuario/login.html"
 template_registro = "usuario/registro.html"
@@ -41,10 +44,15 @@ template_edit_modelo="articulo/modelo/edit_modelo.html"
 #producto/modelo/GestionModelo.html
 #producto/modelo/edit_modelo.html
 
+### Reporte de ingresos
+template_reporte_ingresos="reportes/reporte1.html"
+#producto/modelo/GestionModelo.html
+#producto/modelo/edit_modelo.html
+
 
 
 ##validacion de usuario y registro
-
+"""
 def login_usuario(request):
     if request.method == 'POST':
         username = request.POST['txtUsuario']
@@ -91,19 +99,27 @@ def registrar_usuario(request):
             return redirect('/registro')
     else:
         return render(request,template_registro)
-    
+"""    
 
 #Gestion a la tabla marca
+
+def salir(request):
+    logout(request)
+    return redirect('/')
+
+@login_required
 def marca(request):
     marcas = Marca.objects.all()
     context = {"marcas":marcas}
     return render(request, template_gestion_marca,context)
 
+@login_required
 def edicionmarca(request, codigo):
     marca = Marca.objects.get(codigo = codigo)
     context = {"marca":marca}
     return render(request, template_edit_marca,context)
 
+@login_required
 def updatemarca(request, codigo):
     codigo = request.POST["txtCodigo"]
     nombre = request.POST["txtNombre"]
@@ -114,6 +130,7 @@ def updatemarca(request, codigo):
     marca.save()
     return redirect("/marca")
 
+@login_required
 def registrarmarca(request):
     codigo = request.POST["txtCodigo"]
     nombre = request.POST["txtNombre"]
@@ -121,6 +138,7 @@ def registrarmarca(request):
     marca = Marca.objects.create(codigo=codigo,nombre=nombre)
     return redirect("/marca")
 
+@login_required
 def eliminarmarca(request, codigo):
     marca = Marca.objects.get(codigo = codigo)
     marca.delete()
@@ -128,16 +146,19 @@ def eliminarmarca(request, codigo):
 
 
 #Gestion a la tabla modelo
+@login_required
 def modelo(request):
     modelos = Modelo.objects.all()
     context = {"modelos":modelos}
     return render(request, template_gestion_modelo,context)
 
+@login_required
 def edicionmodelo(request, codigo):
     modelo = Modelo.objects.get(codigo = codigo)
     context = {"modelo":modelo}
     return render(request, template_edit_modelo,context)
 
+@login_required
 def updatemodelo(request, codigo):
     codigo = request.POST["txtCodigo"]
     nombre = request.POST["txtNombre"]
@@ -148,6 +169,7 @@ def updatemodelo(request, codigo):
     modelo.save()
     return redirect("/modelo")
 
+@login_required
 def registrarmodelo(request):
     codigo = request.POST["txtCodigo"]
     nombre = request.POST["txtNombre"]
@@ -155,6 +177,7 @@ def registrarmodelo(request):
     modelo = Modelo.objects.create(codigo=codigo,nombre=nombre)
     return redirect("/modelo")
 
+@login_required
 def eliminarmodelo(request, codigo):
     modelo = Modelo.objects.get(codigo = codigo)
     modelo.delete()
@@ -162,16 +185,19 @@ def eliminarmodelo(request, codigo):
 
 
 #Gestion a la tabla categoria
+@login_required
 def categoria(request):
     categorias = Categoria.objects.all()
     context = {"categorias":categorias}
     return render(request, template_gestion_categoria,context)
 
+@login_required
 def edicioncategoria(request, codigo):
     categoria = Categoria.objects.get(codigo = codigo)
     context = {"categoria":categoria}
     return render(request, template_edit_categoria,context)
 
+@login_required
 def updatecategoria(request, codigo):
     codigo = request.POST["txtCodigo"]
     nombre = request.POST["txtNombre"]
@@ -184,6 +210,7 @@ def updatecategoria(request, codigo):
     categoria.save()
     return redirect("/categoria")
 
+@login_required
 def registrarcategoria(request):
     codigo = request.POST["txtCodigo"]
     nombre = request.POST["txtNombre"]
@@ -192,6 +219,7 @@ def registrarcategoria(request):
     categoria = Categoria.objects.create(codigo=codigo,nombre=nombre,descripcion=descripcion)
     return redirect("/categoria")
 
+@login_required
 def eliminarcategoria(request, codigo):
     categoria = Categoria.objects.get(codigo = codigo)
     categoria.delete()
@@ -199,6 +227,7 @@ def eliminarcategoria(request, codigo):
 
 
 #Gestion a la tabla articulo
+@login_required
 def articulo(request):
     articulos = Articulo.objects.all()
     modelos = Modelo.objects.all()
@@ -208,6 +237,7 @@ def articulo(request):
     context = {"articulos":articulos,"modelos":modelos,"marcas":marcas,"categorias":categorias}
     return render(request, template_gestion_articulo,context)
 
+@login_required
 def edicionarticulo(request, codigo):
     articulo = Articulo.objects.get(codigo = codigo)
     modelos = Modelo.objects.all()
@@ -216,6 +246,7 @@ def edicionarticulo(request, codigo):
     context = {"articulo":articulo,"modelos":modelos,"marcas":marcas,"categorias":categorias}
     return render(request, template_edit_articulo,context)
 
+@login_required
 def updatearticulo(request, codigo):
     codigo = request.POST["txtCodigo"]
     nombre = request.POST["txtNombre"]
@@ -239,6 +270,7 @@ def updatearticulo(request, codigo):
     return redirect("/articulo")
 
 
+@login_required
 def registrararticulo(request):
     codigo = request.POST["txtCodigo"]
     nombre = request.POST["txtNombre"]
@@ -255,6 +287,7 @@ def registrararticulo(request):
     #articulo.save()
     return redirect("/articulo")
 
+@login_required
 def eliminararticulo(request, codigo):
     articulo = Articulo.objects.get(codigo = codigo)
     articulo.delete()
@@ -270,6 +303,7 @@ template_gestion_pedido="acciones/pedido/GestionPedido.html"
 template_edit_pedido="acciones/pedido/edit_pedido.html"
 
 #Gestion a la tabla ingreso
+@login_required
 def ingreso(request):
     ingresos = Orden_Ingreso.objects.all()
     articulos = Articulo.objects.all()
@@ -277,16 +311,21 @@ def ingreso(request):
     context = {"ingresos":ingresos, "articulos":articulos, "usuarios":usuarios}
     return render(request, template_gestion_ingreso,context)
 
+@login_required
 def edicioningreso(request, codigo):
-    ingresos = Orden_Ingreso.objects.get(codigo = codigo)
-    context = {"ingreso":ingresos}
+    ingreso = Orden_Ingreso.objects.get(codigo = codigo)
+    articulos = Articulo.objects.all()
+    usuarios = Usuario.objects.all()
+    context = {"ingreso":ingreso, "articulos":articulos, "usuarios":usuarios}
     return render(request, template_edit_ingreso, context)
 
+@login_required
 def updateingreso(request, codigo):
     codigo = request.POST["txtCodigo"]
     articulo = request.POST["txtArticulo"]
     cantidad = request.POST["txtCantidad"]
     fecha = request.POST["txtFecha"]
+    hora = request.POST["txtHora"]
     usuario =  request.POST["txtUsuario"]
 
     ingreso = Orden_Ingreso.objects.get(codigo = codigo)
@@ -297,23 +336,32 @@ def updateingreso(request, codigo):
     ingreso.codigo_Usuario = usuario_fk
 
     ingreso.cant_Art_Ingresados = cantidad
-
     ingreso.save()
     return redirect("/ingreso")
 
+@login_required
 def registraringreso(request):
     codigo = request.POST["txtCodigo"]
     articulo = request.POST["txtArticulo"]
     cantidad = request.POST["txtCantidad"]
     fecha = request.POST["txtFecha"]
+    hora = request.POST["txtHora"]
     usuario =  request.POST["txtUsuario"]
 
     articulo_fk = Articulo.objects.get(codigo = articulo)
     usuario_fk = Usuario.objects.get(codigo = usuario)
 
-    ingreso = Orden_Ingreso.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Art_Ingresados=cantidad,fecha_Ingreso=fecha,codigo_Usuario=usuario_fk)
+    ingreso = Orden_Ingreso.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Art_Ingresados=cantidad,fecha_Ingreso=fecha,hora_Ingreso=hora,codigo_Usuario=usuario_fk)
+    
+    ## prueba de transaccion de ingreso
+    trans_stock = articulo_fk.stock + int(cantidad)
+    articulo_fk.stock = trans_stock
+    articulo_fk.save() 
+    ##
+
     return redirect("/ingreso")
 
+@login_required
 def eliminaringreso(request, codigo):
     ingreso = Orden_Ingreso.objects.get(codigo = codigo)
     ingreso.delete()
@@ -322,7 +370,7 @@ def eliminaringreso(request, codigo):
 
 
 #Gestion a la tabla Pedido
-
+@login_required
 def pedido(request):
     pedidos = Orden_Pedido.objects.all()
     articulos = Articulo.objects.all()
@@ -330,16 +378,19 @@ def pedido(request):
     context = {"pedidos":pedidos, "articulos":articulos, "usuarios":usuarios}
     return render(request, template_gestion_pedido,context)
 
+@login_required
 def edicionpedido(request, codigo):
     pedido = Orden_Pedido.objects.get(codigo = codigo)
     context = {"pedido":pedido}
     return render(request, template_edit_pedido, context)
 
+@login_required
 def updatepedido(request, codigo):
     codigo = request.POST["txtCodigo"]
     articulo = request.POST["txtArticulo"]
     cantidad = request.POST["txtCantidad"]
     fecha = request.POST["txtFecha"]
+    hora = request.POST["txtHora"]
     usuario =  request.POST["txtUsuario"]
 
     pedido = Orden_Pedido.objects.get(codigo = codigo)
@@ -354,19 +405,22 @@ def updatepedido(request, codigo):
     pedido.save()
     return redirect("/pedido")
 
+@login_required
 def registrarpedido(request):
     codigo = request.POST["txtCodigo"]
     articulo = request.POST["txtArticulo"]
     cantidad = request.POST["txtCantidad"]
     fecha = request.POST["txtFecha"]
+    hora = request.POST["txtHora"]
     usuario =  request.POST["txtUsuario"]
 
     articulo_fk = Articulo.objects.get(codigo = articulo)
     usuario_fk = Usuario.objects.get(codigo = usuario)
 
-    pedido = Orden_Pedido.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Solicitada=cantidad,fecha_Solicitud=fecha,codigo_Usuario=usuario_fk)
+    pedido = Orden_Pedido.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Solicitada=cantidad,fecha_Solicitud=fecha,hora_Solicitud=hora,codigo_Usuario=usuario_fk)
     return redirect("/pedido")
 
+@login_required
 def eliminarpedido(request, codigo):
     pedido = Orden_Pedido.objects.get(codigo = codigo)
     pedido.delete()
@@ -376,6 +430,7 @@ def eliminarpedido(request, codigo):
 template_gestion_salida="acciones/salida/GestionSalida.html"
 template_edit_salida="acciones/salida/edit_salida.html"
 
+@login_required
 def salida(request):
     salidas = Orden_Salida.objects.all()
     articulos = Articulo.objects.all()
@@ -383,16 +438,19 @@ def salida(request):
     context = {"salidas":salidas, "articulos":articulos, "usuarios":usuarios}
     return render(request, template_gestion_salida, context)
 
+@login_required
 def edicionsalida(request, codigo):
     salida = Orden_Salida.objects.get(codigo = codigo)
     context = {"salida":salida}
     return render(request, template_edit_salida, context)
 
+@login_required
 def updatesalida(request, codigo):
     codigo = request.POST["txtCodigo"]
     articulo = request.POST["txtArticulo"]
     cantidad = request.POST["txtCantidad"]
     fecha = request.POST["txtFecha"]
+    hora = request.POST["txtHora"]
     usuario =  request.POST["txtUsuario"]
 
     salida = Orden_Salida.objects.get(codigo = codigo)
@@ -407,20 +465,42 @@ def updatesalida(request, codigo):
     salida.save()
     return redirect("/salida")
 
+@login_required
 def registrarsalida(request):
     codigo = request.POST["txtCodigo"]
     articulo = request.POST["txtArticulo"]
     cantidad = request.POST["txtCantidad"]
     fecha = request.POST["txtFecha"]
+    hora = request.POST["txtHora"]
     usuario =  request.POST["txtUsuario"]
 
     articulo_fk = Articulo.objects.get(codigo = articulo)
     usuario_fk = Usuario.objects.get(codigo = usuario)
 
-    salida = Orden_Salida.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Art_Salida=cantidad,fecha_Salida=fecha,codigo_Usuario=usuario_fk)
+    salida = Orden_Salida.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Art_Salida=cantidad,fecha_Salida=fecha,hora_Salida=hora,codigo_Usuario=usuario_fk)
+    
+    ## prueba de transaccion de salida
+    trans_stock = articulo_fk.stock - int(cantidad)
+    articulo_fk.stock = trans_stock
+    articulo_fk.save() 
+    ##
+    
+
     return redirect("/salida")
 
+@login_required
 def eliminarsalida(request, codigo):
     salida = Orden_Salida.objects.get(codigo = codigo)
     salida.delete()
     return redirect("/salida")
+
+
+
+## consultas para reportes
+@login_required
+def reporte(request):
+    #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
+    reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value')
+    context = {"reporte":reporte}
+    return render(request, template_reporte_ingresos, context)   
+

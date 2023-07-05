@@ -25,8 +25,12 @@
                         <input type="number" name="txtCantidad" class="form-control">
                     </div><br>
                     <div>
-                        <label><em>Fecha Ingresado:</em></label>
-                        <input type="datetime-local" name="txtFecha" class="form-control">
+                        <label><em>Fecha Ingresada:</em></label>
+                        <input type="date" name="txtFecha" class="form-control">
+                    </div><br>
+                    <div>
+                        <label><em>Hora Ingresada:</em></label>
+                        <input type="time" name="txtHora" class="form-control">
                     </div><br>
                     <div>
                         <select class="form-select" aria-label="Default select example" name="txtUsuario">
@@ -56,6 +60,7 @@
                     <th scope="col">Articulo</th>
                     <th scope="col">Cantidad Ingresado</th>
                     <th scope="col">Fecha Ingreso</th>
+                    <th scope="col">Hora Ingreso</th>
                     <th scope="col">Encargado/Responsable</th>
                     <th scope="col" colspan="2">Acciones</th>
                 </tr>
@@ -67,6 +72,7 @@
                     <td>{{i.codigo_Articulo}}</td>
                     <td>{{i.cant_Art_Ingresados}}</td>
                     <td>{{i.fecha_Ingreso}}</td>
+                    <td>{{i.hora_Ingreso}}</td>
                     <td>{{i.codigo_Usuario}}</td>
                     <td>
                         <button type="button" class="btn btn-light">

@@ -49,7 +49,8 @@ class Orden_Ingreso(models.Model):
     codigo=models.CharField(primary_key=True, max_length=6)
     codigo_Articulo=models.ForeignKey(Articulo, on_delete=models.CASCADE)
     cant_Art_Ingresados=models.IntegerField()
-    fecha_Ingreso=models.DateTimeField()
+    fecha_Ingreso=models.DateField()
+    hora_Ingreso=models.TimeField()
     codigo_Usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -60,7 +61,8 @@ class Orden_Pedido(models.Model):
     codigo=models.CharField(primary_key=True, max_length=6)
     codigo_Articulo=models.ForeignKey(Articulo, on_delete=models.CASCADE)
     cant_Solicitada=models.IntegerField()
-    fecha_Solicitud=models.DateTimeField()
+    fecha_Solicitud=models.DateField()
+    hora_Solicitud=models.TimeField()
     codigo_Usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -71,7 +73,8 @@ class Orden_Salida(models.Model):
     codigo=models.CharField(primary_key=True, max_length=6)
     codigo_Articulo=models.ForeignKey(Articulo, on_delete=models.CASCADE)
     cant_Art_Salida=models.IntegerField()
-    fecha_Salida=models.DateTimeField()
+    fecha_Salida=models.DateField()
+    hora_Salida=models.TimeField()
     codigo_Usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -30,6 +30,10 @@
                         <input value="{{pedido.fecha_Solicitud}}" type="text" name="txtFecha" class="form-control">
                     </div><br>
                     <div>
+                        <label><em>Hora Pedido</p></em></label>
+                        <input value="{{pedido.hora_Solicitud}}" type="text" name="txtHora" class="form-control">
+                    </div><br>
+                    <div>
                         <select class="form-select" aria-label="Default select example" name="txtUsuario">
                             <option selected value="{{pedido.codigo_Usuario.nombre}}">{{pedido.codigo_Usuario.nombre}}</option>
                             {% for u in usuarios %}
