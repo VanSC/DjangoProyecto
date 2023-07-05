@@ -4,6 +4,8 @@
 
     <div class="col-8 pt-3 text-center">
         <h5>Lista de Ingresos totales</h5>
+        <a href="{% url 'generar_reporte_completo' %}" class="btn btn-primary">Generar Informe total</a>
+
         <hr>
         <h2>Lista de datos</h2>
             <form method="POST">
@@ -63,6 +65,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <a href="{% url 'generar_reporte' %}?txtfingreso={{ request.POST.txtfingreso }}" class="btn btn-primary">Generar Informe</a>
     </div>
 </div>
 {% endblock %}

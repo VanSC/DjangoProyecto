@@ -4,6 +4,7 @@
 
     <div class="col-8 pt-3 text-center">
         <h5>Lista de Ingresos totales</h5>
+        <a href="{% url 'generar_reporte_completo_salida' %}" class="btn btn-primary">Generar Informe total</a>
         <form method="POST">
             {% csrf_token %}
             <table class="table">
@@ -62,6 +63,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <a href="{% url 'generar_reporte_salida' %}?txtfsalida={{ request.POST.txtfsalida }}" class="btn btn-primary">Generar Informe</a>
     </div>
 </div>
 {% endblock %}

@@ -4,6 +4,11 @@ from django.contrib.auth import logout
 from .models import Usuario, Marca, Modelo, Categoria, Articulo, Orden_Ingreso, Orden_Pedido, Orden_Salida
 from pyexpat.errors import messages
 from django.db.models import Avg, Max, Count, Sum, Q, F
+from django.views.generic import View
+from .utils import render_to_pdf
+from django.http.response import HttpResponse
+from datetime import datetime
+
 
 template_login="usuario/login.html"
 template_registro = "usuario/registro.html"
@@ -542,3 +547,142 @@ def reportesalida(request):
     
     context = {"reporte":reporte}
     return render(request, template_reporte_salidas, context)
+
+#class generar_reporte_ingreso(View):
+    #def get(self, request, *args, **kwargs):
+       # template_name = "reporte_salidas.html"
+       # ingresos = Orden_Ingreso.objects.all()
+       # data = {
+       #     'ingresos': ingresos
+       # }
+       # pdf = render_to_pdf(template_name, data)
+       # return HttpResponse(pdf, content_type='application/pdf')
+
+
+
+class generar_reporte_ingreso(View):
+    def get(self, request, *args, **kwargs):
+        template_name = "reporte_ingresos.html"
+        fecha_filtro = request.GET.get("txtfingreso")
+
+        # Validar que la entrada sea un número
+        if not fecha_filtro.isdigit():
+            return redirect('reporteingreso')  # Redireccionar a la página principal o mostrar un mensaje de error
+
+        # Obtener el mes y el año actual
+        today = datetime.now()
+        year = today.year
+        month = int(fecha_filtro)
+
+        # Filtrar los datos por mes y año
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value').filter(orden_ingreso__fecha_Ingreso__year=year, orden_ingreso__fecha_Ingreso__month=month).distinct()
+
+        if reporte:
+            data = {
+                'reporte': reporte,
+                'count': reporte.count()
+            }
+            pdf = render_to_pdf(template_name, data)
+            if pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'filename="reporte.pdf"'
+                return response
+
+        return redirect('reporteingreso')
+    
+
+class generar_reporte_ingreso_total(View):
+    def get_data_reporte(self, request):
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value')
+        context = {"reporte": reporte}
+        return context
+
+    def get(self, request, *args, **kwargs):
+        template_name = "reporte_ingresos.html"
+        data = self.get_data_reporte(request)
+        pdf = render_to_pdf(template_name, data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+class generar_reporte_salida(View):
+    def get(self, request, *args, **kwargs):
+        template_name = "reporte_salidad.html"
+        fecha_filtro = request.GET.get("txtfsalida")
+
+        if not fecha_filtro.isdigit():
+            return redirect('reportesalida')
+
+        today = datetime.now()
+        year = today.year
+        month = int(fecha_filtro)
+
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value').filter(orden_salida__fecha_Salida__year=year, orden_salida__fecha_Salida__month=month).distinct()
+
+        if reporte:
+            data = {
+                'reporte': reporte,
+                'count': reporte.count()
+            }
+            pdf = render_to_pdf(template_name, data)
+            if pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'filename="reporte.pdf"'
+                return response
+
+        return redirect('reportesalida')
+
+
+class generar_reporte_salida_total(View):
+    def get_data_reporte(self, request):
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value')
+        context = {"reporte": reporte}
+        return context
+
+    def get(self, request, *args, **kwargs):
+        template_name = "reporte_salidad.html"
+        data = self.get_data_reporte(request)
+        pdf = render_to_pdf(template_name, data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+
+
+class generar_reporte_pedido(View):
+    def get(self, request, *args, **kwargs):
+        template_name = "reporte_pedidos.html"
+        fpedido_filtro = request.GET.get("txtfpedido")
+
+        if not fpedido_filtro.isdigit():
+            return redirect('reportepedido')
+
+        today = datetime.now()
+        year = today.year
+        month = int(fpedido_filtro)
+
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value').filter(orden_pedido__fecha_Solicitud__year=year, orden_pedido__fecha_Solicitud__month=month).distinct()
+
+        if reporte:
+            data = {
+                'reporte': reporte,
+                'count': reporte.count()
+            }
+            pdf = render_to_pdf(template_name, data)
+            if pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'filename="reporte.pdf"'
+                return response
+
+        return redirect('reportepedido')
+
+
+class generar_reporte_pedido_total(View):
+    def get_data_reporte(self, request):
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value')
+        context = {"reporte": reporte}
+        return context
+
+    def get(self, request, *args, **kwargs):
+        template_name = "reporte_pedidos.html"
+        data = self.get_data_reporte(request)
+        pdf = render_to_pdf(template_name, data)
+        return HttpResponse(pdf, content_type='application/pdf')

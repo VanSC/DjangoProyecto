@@ -54,6 +54,15 @@ urlpatterns=[
     path('reporteingreso',views.reporteingreso,name='reporteingreso'),
     path('reportepedido',views.reportepedido,name='reportepedido'),
     path('reportesalida',views.reportesalida,name='reportesalida'),
+    
 
+    path('generar-reporte/', views.generar_reporte_ingreso.as_view(), name='generar_reporte'),
+    path('generar-reporte-completo/', views.generar_reporte_ingreso_total.as_view(), name='generar_reporte_completo'),
+    
+    path('generar-reporte-salida/', views.generar_reporte_salida.as_view(), name='generar_reporte_salida'),
+    path('generar-reporte-completo-salida/', views.generar_reporte_salida_total.as_view(), name='generar_reporte_completo_salida'),
+    
+    path('generar-reporte-pedido-pedido/', views.generar_reporte_pedido.as_view(), name='generar_reporte_pedido'),
+    path('generar-reporte-completo-pedido/', views.generar_reporte_pedido_total.as_view(), name='generar_reporte_completo_pedido'),
     #path("Inicio",views.index)
     ]

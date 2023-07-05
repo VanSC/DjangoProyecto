@@ -1,0 +1,23 @@
+<body>
+    <h1>Lista de Ingreso Orden de articulos</h1>
+    <h3>Cantidad de Ingresos: {{ reporte.count }}</h3>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th scope="col">Articulo</th>
+                <th scope="col">Nombre Articulo</th>
+                <th scope="col">Cantidad Salida</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reporte %}
+            <tr>
+                <td>{{ r.codigo }}</td>
+                <td>{{ r.nombre }}</td>
+                <td>{{ r.value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
