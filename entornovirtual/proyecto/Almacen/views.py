@@ -45,10 +45,15 @@ template_edit_modelo="articulo/modelo/edit_modelo.html"
 #producto/modelo/edit_modelo.html
 
 ### Reporte de ingresos
-template_reporte_ingresos="reportes/reporte1.html"
+template_reporte_ingresos="reportes/reporteingreso.html"
 #producto/modelo/GestionModelo.html
 #producto/modelo/edit_modelo.html
 
+### Reporte de pedido
+template_reporte_pedidos="reportes/reportePedido.html"
+
+### Reporte de salida
+template_reporte_salidas="reportes/reporteSalida.html"
 
 
 ##validacion de usuario y registro
@@ -477,12 +482,13 @@ def registrarsalida(request):
     articulo_fk = Articulo.objects.get(codigo = articulo)
     usuario_fk = Usuario.objects.get(codigo = usuario)
 
-    salida = Orden_Salida.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Art_Salida=cantidad,fecha_Salida=fecha,hora_Salida=hora,codigo_Usuario=usuario_fk)
-    
+        
     ## prueba de transaccion de salida
     trans_stock = articulo_fk.stock - int(cantidad)
-    articulo_fk.stock = trans_stock
-    articulo_fk.save() 
+    if(trans_stock >= 0):
+        salida = Orden_Salida.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Art_Salida=cantidad,fecha_Salida=fecha,hora_Salida=hora,codigo_Usuario=usuario_fk)
+        articulo_fk.stock = trans_stock
+        articulo_fk.save() 
     ##
     
 
@@ -498,9 +504,24 @@ def eliminarsalida(request, codigo):
 
 ## consultas para reportes
 @login_required
-def reporte(request):
+def reporteingreso(request):
     #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
     reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value')
     context = {"reporte":reporte}
     return render(request, template_reporte_ingresos, context)   
 
+
+@login_required
+def reportepedido(request):
+    #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
+    reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value')
+    context = {"reporte":reporte}
+    return render(request, template_reporte_pedidos, context)
+
+
+@login_required
+def reportesalida(request):
+    #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
+    reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value')
+    context = {"reporte":reporte}
+    return render(request, template_reporte_salidas, context)

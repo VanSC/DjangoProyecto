@@ -51,7 +51,9 @@ urlpatterns=[
     path('salida/updatesalida/<codigo>',views.updatesalida),
     path('salida/eliminarsalida/<codigo>',views.eliminarsalida),
 
-    path('reporte',views.reporte,name='reporte'),
+    path('reporteingreso',views.reporteingreso,name='reporteingreso'),
+    path('reportepedido',views.reportepedido,name='reportepedido'),
+    path('reportesalida',views.reportesalida,name='reportesalida'),
 
     #path("Inicio",views.index)
     ]
