@@ -43,6 +43,10 @@ p{
     text-decoration: none;
     color: rgb(185, 0, 0);
 }
+.pedir{
+    text-decoration: none;
+    color: rgb(6, 132, 21);
+}
 .logo{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -133,4 +137,7 @@ p{
     height: 100px;
     margin-left: 50px;
 
+}
+td .validatestock{
+    color: green;
 }

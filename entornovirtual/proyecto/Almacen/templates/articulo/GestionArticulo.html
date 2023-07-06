@@ -124,6 +124,7 @@
         </form>
     </div>
     <div class="col-8 pt-3 text-center">
+        
         <h5>Lista de Articulos</h5>
         <hr>
         <table class="table table-striped table-hover">
@@ -135,7 +136,7 @@
                     <th scope="col">Modelo</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Categoria</th>
-                    <th scope="col" colspan="2">Acciones</th>
+                    <th scope="col" colspan="3">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -143,7 +144,11 @@
                     {% for a in articulos %}
                     <th scope="row">{{a.codigo}}</th>
                     <td>{{a.nombre}}</td>
-                    <td>{{a.stock}}</td>
+                    {% if a.stock > 10 %}
+                        <td style="color: rgb(0, 147, 22);">{{a.stock}}</td>
+                    {% else %}
+                        <td style="color: rgb(134, 0, 0); font-weight: bolder;">{{a.stock}}</td>
+                    {% endif %}
                     <td>{{a.codigo_Modelo.nombre}}</td>
                     <td>{{a.codigo_Marca.nombre}}</td>
                     <td>{{a.codigo_Categoria.nombre}}</td>
@@ -166,6 +171,16 @@
                                     <path
                                         d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                                 </svg>
+                            </a>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-light">
+                            <a class="pedir" href="/articulo/eliminararticulo/{{a.codigo}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
+                                  </svg>
                             </a>
                         </button>
                     </td>
