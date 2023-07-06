@@ -12,6 +12,8 @@ from datetime import datetime
 
 template_login="usuario/login.html"
 template_registro = "usuario/registro.html"
+
+template_home="home.html"
 #template_index="inicio.html"
 ##VISTAS
 
@@ -116,6 +118,15 @@ def registrar_usuario(request):
 def salir(request):
     logout(request)
     return redirect('/')
+
+@login_required
+def home(request):
+    articulos = Articulo.objects.all()
+    cant_ingresos = Orden_Ingreso.objects.count()
+    cant_pedidos = Orden_Pedido.objects.count()
+    cant_salidas = Orden_Salida.objects.count()
+    context = {"articulos":articulos,"cant_ingresos":cant_ingresos,"cant_pedidos":cant_pedidos,"cant_salidas":cant_salidas}
+    return render(request, template_home,context)
 
 @login_required
 def marca(request):

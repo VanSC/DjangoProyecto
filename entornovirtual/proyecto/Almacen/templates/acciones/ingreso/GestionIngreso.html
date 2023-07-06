@@ -16,7 +16,7 @@
                         <select class="form-select" aria-label="Default select example" name="txtArticulo">
                             <option selected>Articulos</option>
                             {% for a in articulos %}
-                            <option value="{{a.codigo}}">{{a.nombre}}</option>
+                            <option value="{{a.codigo}}">{{a.nombre}} {{a.codigo_Modelo}}</option>
                             {% endfor %}
                         </select>
                     </div><br>
@@ -36,7 +36,7 @@
                         <select class="form-select" aria-label="Default select example" name="txtUsuario">
                             <option selected>Usuario</option>
                             {% for u in usuarios %}
-                            <option value="{{u.codigo}}">{{u.nombre}}</option>
+                            <option value="{{u.codigo}}">{{u.nombre}} {{u.apellido}}</option>
                             {% endfor %}
                         </select>
                     </div><br>
@@ -44,8 +44,8 @@
             </div>
             <hr>
             <div class="text-center d-grid gap-2 d-md-block">
-                <button class="btn btn-success" type="submit">Registrar</button>
-                <button class="btn btn-danger" type="reset">Cancelar</button>
+                <button class="btnsave btn btn-success" type="submit">Registrar</button>
+                <button class="btndelete btn btn-danger" type="reset">Cancelar</button>
             </div>
             <hr>
         </form>
@@ -61,7 +61,7 @@
                     <th scope="col">Cantidad Ingresado</th>
                     <th scope="col">Fecha Ingreso</th>
                     <th scope="col">Hora Ingreso</th>
-                    <th scope="col">Encargado/Responsable</th>
+                    <th scope="col">Responsable</th>
                     <th scope="col" colspan="2">Acciones</th>
                 </tr>
             </thead>
@@ -69,7 +69,7 @@
                 {% for i in ingresos %}
                 <tr>
                     <th scope="row">{{i.codigo}}</th>
-                    <td>{{i.codigo_Articulo}}</td>
+                    <td>{{i.codigo_Articulo.codigo_Modelo}}</td>
                     <td>{{i.cant_Art_Ingresados}}</td>
                     <td>{{i.fecha_Ingreso}}</td>
                     <td>{{i.hora_Ingreso}}</td>

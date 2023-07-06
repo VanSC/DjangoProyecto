@@ -1,82 +1,119 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title%}Inicio{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title%}Inicio{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/estilo.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
 </head>
-  <body class="container">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#"><h4 class="logo">A L M A C E N</h4></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/articulo">Inicio</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/articulo">Articulo</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Modulos Articulo
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/categoria">Categoria Articulo</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/modelo">Modelo Articulo</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/marca">Marca Articulo</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Acciones Almacen
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/ingreso">Entrada de Articulos</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/salida">Salida de Articulos</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/pedido">Solicitud de pedido de Articulos</a></li>
-                </ul>
-              </li>
 
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Modulos Reportes
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/reporteingreso">Reporte de ingresos</a></li>
-                  <li><a class="dropdown-item" href="/reportepedido">Reporte de pedidos</a></li>
-                  <li><a class="dropdown-item" href="/reportesalida">Reporte de salidas</a></li>
-                </ul>
-              </li>
+<body>
+  <nav class="nav-principal">
+    <div class="logo-name">
 
-            </ul>
-            <form class="d-flex" role="search">
-              <a class="nav-link active" aria-current="page" href="{% url 'salir' %}">Salir 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-closed-fill" viewBox="0 0 16 16">
-                  <path d="M12 1a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2a1 1 0 0 1 1-1h8zm-2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                </svg>
-              </a>
-            </form>
-          </div>
-        </div>
-      </nav>
-      <div>
-        {% block content %}{% endblock %}
-      </div>
-      <hr>
-      <footer>
-        <h6><em>Django Proyect - 2023 - C24 - B - XYTV</em></h6>
-      </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-  </body>
+      <span class="logo_name"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-database-fill" viewBox="0 0 16 16">
+          <path
+            d="M3.904 1.777C4.978 1.289 6.427 1 8 1s3.022.289 4.096.777C13.125 2.245 14 2.993 14 4s-.875 1.755-1.904 2.223C11.022 6.711 9.573 7 8 7s-3.022-.289-4.096-.777C2.875 5.755 2 5.007 2 4s.875-1.755 1.904-2.223Z" />
+          <path
+            d="M2 6.161V7c0 1.007.875 1.755 1.904 2.223C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777C13.125 8.755 14 8.007 14 7v-.839c-.457.432-1.004.751-1.49.972C11.278 7.693 9.682 8 8 8s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972Z" />
+          <path
+            d="M2 9.161V10c0 1.007.875 1.755 1.904 2.223C4.978 12.711 6.427 13 8 13s3.022-.289 4.096-.777C13.125 11.755 14 11.007 14 10v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972Z" />
+          <path
+            d="M2 12.161V13c0 1.007.875 1.755 1.904 2.223C4.978 15.711 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972Z" />
+        </svg> Almacen</span>
+    </div>
+
+    <div class="menu-items">
+      <ul class="nav-links">
+        
+        <li class="list-nav"><a href="/">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="home"><path fill="none" stroke="#200E32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.65721519,18.7714023 L6.65721519,15.70467 C6.65719744,14.9246392 7.29311743,14.2908272 8.08101266,14.2855921 L10.9670886,14.2855921 C11.7587434,14.2855921 12.4005063,14.9209349 12.4005063,15.70467 L12.4005063,15.70467 L12.4005063,18.7809263 C12.4003226,19.4432001 12.9342557,19.984478 13.603038,20 L15.5270886,20 C17.4451246,20 19,18.4606794 19,16.5618312 L19,16.5618312 L19,7.8378351 C18.9897577,7.09082692 18.6354747,6.38934919 18.0379747,5.93303245 L11.4577215,0.685301154 C10.3049347,-0.228433718 8.66620456,-0.228433718 7.51341772,0.685301154 L0.962025316,5.94255646 C0.362258604,6.39702249 0.00738668938,7.09966612 0,7.84735911 L0,16.5618312 C0,18.4606794 1.55487539,20 3.47291139,20 L5.39696203,20 C6.08235439,20 6.63797468,19.4499381 6.63797468,18.7714023 L6.63797468,18.7714023" transform="translate(2.5 2)"></path></svg>
+          <span class="link-name">Inicio</span>
+        </a></li>
+        <li class="list-nav"><a href="/articulo">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 64 64" viewBox="0 0 64 64"
+              id="graph-presentation">
+              <path fill="#231f20" d="M57.5,49.4h-51c-3,0-5.5-2.5-5.5-5.5V13.6c0-3,2.5-5.5,5.5-5.5h51c3,0,5.5,2.5,5.5,5.5v30.3
+            C63,46.9,60.5,49.4,57.5,49.4z M6.5,10c-2,0-3.6,1.6-3.6,3.6v30.3c0,2,1.6,3.6,3.6,3.6h51c2,0,3.6-1.6,3.6-3.6V13.6
+            c0-2-1.6-3.6-3.6-3.6H6.5z"></path>
+              <path fill="#231f20"
+                d="M55 49.4h-6.9V17.6H55V49.4zM50 47.5h3.2v-28H50V47.5zM45.2 49.4h-6.9V23.5h6.9V49.4zM40.2 47.5h3.2V25.4h-3.2V47.5zM35.5 49.4h-6.9V29.2h6.9V49.4zM30.4 47.5h3.2V31.1h-3.2V47.5zM25.7 49.4h-6.9V34.3h6.9V49.4zM20.6 47.5h3.2V36.2h-3.2V47.5zM15.9 49.4H9v-11h6.9V49.4zM10.9 47.5H14v-7.3h-3.2V47.5z">
+              </path>
+              <path fill="#231f20" d="M46.6,55.9H17.4l4.2-8.4h20.7L46.6,55.9z M20.5,54h23l-2.3-4.6H22.8L20.5,54z">
+              </path>
+            </svg>
+            <span class="link-name">Articulos</span>
+          </a></li>
+        <li class="list-nav"><a href="/ingreso">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="insert">
+              <path
+                d="M58.879 45.172l-8.586 8.585V26.586c0-13.234-10.767-24-24-24s-24 10.766-24 24h4c0-11.028 8.972-20 20-20s20 8.972 20 20v27.171l-8.586-8.585L34.879 48l13.414 13.414L61.707 48l-2.828-2.828z">
+              </path>
+            </svg>
+            <span class="link-name">Ingresos</span>
+          </a></li>
+        <li class="list-nav"><a href="/pedido">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" id="study-notes"><path d="M16,14H8a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Zm0-4H10a1,1,0,0,0,0,2h6a1,1,0,0,0,0-2Zm4-6H17V3a1,1,0,0,0-2,0V4H13V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H4A1,1,0,0,0,3,5V19a3,3,0,0,0,3,3H18a3,3,0,0,0,3-3V5A1,1,0,0,0,20,4ZM19,19a1,1,0,0,1-1,1H6a1,1,0,0,1-1-1V6H7V7A1,1,0,0,0,9,7V6h2V7a1,1,0,0,0,2,0V6h2V7a1,1,0,0,0,2,0V6h2Z"></path></svg>
+               <span class="link-name">Pedidos</span>
+          </a></li>
+        <li class="list-nav"><a href="/salida">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15.5" id="departure">
+              <path d="M12 1.5V0h-1v1.5H4V0H3v1.5H0v14h15v-14h-3zm-11 1h2V4h1V2.5h7V4h1V2.5h2v4H1v-4zm13 12H1v-7h13v7z">
+              </path>
+              <path d="M2.5 11.5h7.793l-1.147 1.146.708.708L12.207 11 9.854 8.646l-.708.708 1.147 1.146H2.5z"></path>
+            </svg>
+            <span class="link-name">Salidas</span>
+          </a></li>
+        <li class="list-nav"><a href="/reporteingreso">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 512 512"
+              viewBox="0 0 512 512" id="pdf">
+              <path d="M371,451H81c-5.523,0-10-4.478-10-10V11c0-5.523,4.477-10,10-10h220c2.652,0,5.195,1.054,7.071,2.929
+            l70,70C379.946,75.804,381,78.348,381,81v120c0,5.523-4.478,10-10,10s-10-4.477-10-10V85.142L296.857,21H91v410h270v-50
+            c0-5.522,4.478-10,10-10s10,4.478,10,10v60C381,446.522,376.522,451,371,451z"></path>
+              <path
+                d="M301 511H21c-5.523 0-10-4.478-10-10V91c0-5.523 4.477-10 10-10h60c5.523 0 10 4.477 10 10s-4.477 10-10 10H31v390h260v-50c0-5.522 4.478-10 10-10s10 4.478 10 10v60C311 506.522 306.522 511 301 511zM371 91h-70c-5.522 0-10-4.477-10-10V11c0-5.523 4.478-10 10-10s10 4.477 10 10v60h60c5.522 0 10 4.477 10 10S376.522 91 371 91z">
+              </path>
+              <path d="M491,391H181c-5.523,0-10-4.478-10-10V201c0-5.523,4.477-10,10-10h310c5.522,0,10,4.477,10,10v180
+            C501,386.522,496.522,391,491,391z M191,371h290V211H191V371z"></path>
+              <path
+                d="M221 351c-5.523 0-10-4.478-10-10V241c0-5.523 4.477-10 10-10h25c19.299 0 35 15.701 35 35 0 19.299-15.701 35-35 35h-15v40C231 346.522 226.523 351 221 351zM231 281h15c8.271 0 15-6.729 15-15s-6.729-15-15-15h-15V281zM328 351h-17c-5.522 0-10-4.478-10-10V241c0-5.523 4.478-10 10-10h17c29.225 0 53 23.776 53 53v14C381 327.225 357.225 351 328 351zM321 331h7c18.196 0 33-14.804 33-33v-14c0-18.196-14.804-33-33-33h-7V331zM411 351c-5.522 0-10-4.478-10-10V241c0-5.523 4.478-10 10-10h40c5.522 0 10 4.477 10 10s-4.478 10-10 10h-30v90C421 346.522 416.522 351 411 351z">
+              </path>
+              <path
+                d="M441 301h-30c-5.522 0-10-4.478-10-10s4.478-10 10-10h30c5.522 0 10 4.478 10 10S446.522 301 441 301zM331 171H121c-5.523 0-10-4.477-10-10s4.477-10 10-10h210c5.522 0 10 4.477 10 10S336.522 171 331 171zM331 131H121c-5.523 0-10-4.477-10-10s4.477-10 10-10h210c5.522 0 10 4.477 10 10S336.522 131 331 131zM221 91H121c-5.523 0-10-4.477-10-10s4.477-10 10-10h100c5.523 0 10 4.477 10 10S226.523 91 221 91z">
+              </path>
+            </svg> <span class="link-name">Reportes</span>
+          </a></li>
+      </ul>
+
+      <ul class="logout-mode">
+        <li><a href="/salir/">
+            <i class="uil uil-signout"></i>
+            <span class="link-name">Salir</span>
+          </a></li>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="dashboard">
+    {% block content %}
+
+    {% endblock %}
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <script src="{% static 'script/script.js' %}"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</body>
+
 </html>

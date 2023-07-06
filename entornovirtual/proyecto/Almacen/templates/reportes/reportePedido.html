@@ -1,69 +1,84 @@
 {% extends 'base/index.html' %}
 {% block content %}
-<div class="row pt-3">
-
-    <div class="col-8 pt-3 text-center">
-        <h5>Lista de Ingresos totales</h5>
-        <a href="{% url 'generar_reporte_completo_pedido' %}" class="btn btn-primary">Generar Informe total</a>
-        <form method="POST">
-            {% csrf_token %}
-            <table class="table">
-                <td>
-                    <div class="form-control">
-                        Fecha Pedido: <input type="text" name="txtfpedido" value="{{ request.POST.fpedido }}"></imput>
+<div>
+    <ul class="nav justify-content-center text-center">
+        <li class="nav-item article-item">
+            <a class="nav-link" href="/reporteingreso">
+                Reporte Ingresos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/reportesalida"> Reporte Salidas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/reportepedido"> Reporte Pedidos</a>
+        </li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-12 pt-3 text-center">
+            <form method="POST" action="/reportepedido">
+                {% csrf_token %}
+                <div class="textreporte"><h5>Filtrado de registro pedidos por mes:</h5></div><hr>
+                <div class="row monthcontainer">
+                    <div class="col-2">
+                        <h6>Elegir Mes:</h6>
                     </div>
-                </td>
-                <td>
-                    <div class="form-control">
-                        <button type="submit" class="btn btn-success form-control" >Buscar</button>
+                    <div class="col-4">
+                        <select class="form-select" aria-label="Default select example" name="txtfpedido">
+                            <option selected>elegir un mes</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                          </select>
                     </div>
-                </td>
-            </table>
-        </form>
+                    <div class="col-4">
+                        <button type="submit" class="btnsearch btn-success form-control" >Buscar</button>
+                    </div>
+                </div>
+            </form><hr><br>
+            <h5>Lista de registro de pedido de articulos</h5><hr><br>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Articulo</th>
+                        <th scope="col">Nombre Articulo</th>
+                        <th scope="col">Cantidad Solicitada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for r in reporte %}
+                        <th scope="row">{{r.codigo}}</th>
+                        <th scope="row">{{r.nombre}}</th>
+                        <td scope="row">{{r.value}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table><br>
         <hr>
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Articulo</th>
-                    <th scope="col">Nombre Articulo</th>
-                    <th scope="col">Cantidad Solicitada</th>
-                    <th scope="col" colspan="2">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    {% for r in reporte %}
-                    <th scope="row">{{r.codigo}}</th>
-                    <th scope="row">{{r.nombre}}</th>
-                    <td scope="row">{{r.value}}</td>
-                    
-                    <td>
-                        <button type="button" class="btn btn-light">
-                            <a class="editar" href="/articulo/edicionarticulo/{{a.codigo}}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
-                                </svg>
-                            </a>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-light">
-                            <a class="eliminar" href="/articulo/eliminararticulo/{{a.codigo}}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-                                </svg>
-                            </a>
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{% url 'generar_reporte_pedido' %}?txtfpedido={{ request.POST.txtfpedido }}" class="btn btn-primary">Generar Informe</a>
+        <div class="reporte-content textreporte">
+            <h5>Opciones para generar reporte</h5><br>
+            <div class="row text-center">
+                <div class="gr col-4">
+                    <h6>Generar un reporte del total <br>de registros de pedido</h6>
+                    <a href="{% url 'generar_reporte_completo_pedido' %}" class="btn btnreporte btn-primary">Generar Informe total</a>
+    
+                </div>
+                <div class="gr col-4">
+                    <h6>Generar un reporte de registro de pedido <br>filtrados por mes</h6>
+                    <a href="{% url 'generar_reporte_pedido' %}?txtfpedido={{ request.POST.txtfpedido }}" class="btn btnreporte btn-primary">Generar Informe</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

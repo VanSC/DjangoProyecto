@@ -4,9 +4,9 @@ from .import views
 urlpatterns=[
 
     #login
-    #path("",views.login_usuario),
+    #path("",views.home),
     #path("RegistroUsuario",views.registrar_usuario),
-    path('',views.articulo,name="inicio"),
+    path('',views.home,name="inicio"),
     path('salir/',views.salir,name='salir'),
 
     path('marca',views.marca,name='marca'),
