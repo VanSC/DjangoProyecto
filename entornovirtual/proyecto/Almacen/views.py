@@ -8,6 +8,7 @@ from django.views.generic import View
 from .utils import render_to_pdf
 from django.http.response import HttpResponse
 from datetime import datetime
+from django.contrib import messages
 
 
 template_login="usuario/login.html"
@@ -392,6 +393,14 @@ def eliminaringreso(request, codigo):
 
 #Gestion a la tabla Pedido
 @login_required
+def find_reporte(request, codigo):
+    art_pedido = Articulo.objects.get(codigo=codigo)
+    usuarios = Usuario.objects.all()
+    pedidos = Orden_Pedido.objects.all()
+    context = {"reporte":art_pedido, "usuarios":usuarios,"pedidos":pedidos}
+    return render(request,template_gestion_pedido,context)
+
+@login_required
 def pedido(request):
     pedidos = Orden_Pedido.objects.all()
     articulos = Articulo.objects.all()
@@ -504,8 +513,13 @@ def registrarsalida(request):
     if(trans_stock >= 0):
         salida = Orden_Salida.objects.create(codigo=codigo,codigo_Articulo=articulo_fk,cant_Art_Salida=cantidad,fecha_Salida=fecha,hora_Salida=hora,codigo_Usuario=usuario_fk)
         articulo_fk.stock = trans_stock
-        articulo_fk.save() 
-    ##
+        articulo_fk.save()
+        if(trans_stock >= 10):
+            messages.add_message(request=request,level=messages.SUCCESS,message="Proceso Exitoso")
+        else:
+            messages.add_message(request=request,level=messages.INFO,message="Stock Bajo")
+    else:
+        messages.add_message(request=request,level=messages.WARNING,message="Insuficiente stock")
     
 
     return redirect("/salida")
@@ -523,24 +537,30 @@ def eliminarsalida(request, codigo):
 def reporteingreso(request):
     fingreso = request.POST.get("txtfingreso")
     #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
-    reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value')
+    reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value')
 
     if fingreso:
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value').filter(orden_ingreso__fecha_Ingreso__month = fingreso).distinct()
-        #reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value').filter(orden_ingreso__fecha_Ingreso__month='07') 
+        fecha = datetime.strptime(fingreso, "%Y-%m")
+        mes = fecha.month
+        anio = fecha.year
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value').filter(orden_ingreso__fecha_Ingreso__year=anio, orden_ingreso__fecha_Ingreso__month = mes).distinct()
+        #reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso_cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value').filter(orden_ingresofecha_Ingreso_month='07') 
     
     context = {"reporte":reporte}
-    return render(request, template_reporte_ingresos, context)   
+    return render(request, template_reporte_ingresos, context) 
 
 
 @login_required
 def reportepedido(request):
     fpedido = request.POST.get("txtfpedido")
     #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
-    reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value')
+    reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value')
     
     if fpedido:
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value').filter(orden_pedido__fecha_Solicitud__month = fpedido).distinct()
+        fecha = datetime.strptime(fpedido, "%Y-%m")
+        mes = fecha.month
+        anio = fecha.year
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value').filter(orden_pedido__fecha_Solicitud__year=anio, orden_pedido__fecha_Solicitud__month = mes).distinct()
     
     context = {"reporte":reporte}
     return render(request, template_reporte_pedidos, context)
@@ -550,10 +570,13 @@ def reportepedido(request):
 def reportesalida(request):
     fsalida = request.POST.get("txtfsalida")
     #reporte = Orden_Ingreso.objects.values('codigo_Articulo','codigo_Articulo__nombre').annotate(cantidad=Sum('cant_Art_Ingresados')).order_by('-cantidad')
-    reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value')
+    reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value')
     
     if fsalida:
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value').filter(orden_salida__fecha_Salida__month = fsalida).distinct()
+        fecha = datetime.strptime(fsalida, "%Y-%m")
+        mes = fecha.month
+        anio = fecha.year
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value').filter(orden_salida__fecha_Salida__year=anio, orden_salida__fecha_Salida__month = mes).distinct()
     
     
     context = {"reporte":reporte}
@@ -576,17 +599,16 @@ class generar_reporte_ingreso(View):
         template_name = "reporte_ingresos.html"
         fecha_filtro = request.GET.get("txtfingreso")
 
+        fecha = datetime.strptime(fecha_filtro, "%Y-%m")
+        mes = str(fecha.month)
+        anio = fecha.year
+
         # Validar que la entrada sea un número
-        if not fecha_filtro.isdigit():
+        if not mes.isdigit():
             return redirect('reporteingreso')  # Redireccionar a la página principal o mostrar un mensaje de error
 
-        # Obtener el mes y el año actual
-        today = datetime.now()
-        year = today.year
-        month = int(fecha_filtro)
-
         # Filtrar los datos por mes y año
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value').filter(orden_ingreso__fecha_Ingreso__year=year, orden_ingreso__fecha_Ingreso__month=month).distinct()
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value').filter(orden_ingreso__fecha_Ingreso__year=anio, orden_ingreso__fecha_Ingreso__month=mes).distinct()
 
         if reporte:
             data = {
@@ -604,7 +626,7 @@ class generar_reporte_ingreso(View):
 
 class generar_reporte_ingreso_total(View):
     def get_data_reporte(self, request):
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value').order_by('-value')
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_ingreso__cant_Art_Ingresados'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value')
         context = {"reporte": reporte}
         return context
 
@@ -627,7 +649,7 @@ class generar_reporte_salida(View):
         year = today.year
         month = int(fecha_filtro)
 
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value').filter(orden_salida__fecha_Salida__year=year, orden_salida__fecha_Salida__month=month).distinct()
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value').filter(orden_salida__fecha_Salida__year=year, orden_salida__fecha_Salida__month=month).distinct()
 
         if reporte:
             data = {
@@ -645,7 +667,7 @@ class generar_reporte_salida(View):
 
 class generar_reporte_salida_total(View):
     def get_data_reporte(self, request):
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value').order_by('-value')
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_salida__cant_Art_Salida'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value')
         context = {"reporte": reporte}
         return context
 
@@ -656,21 +678,19 @@ class generar_reporte_salida_total(View):
         return HttpResponse(pdf, content_type='application/pdf')
 
 
-
-
 class generar_reporte_pedido(View):
     def get(self, request, *args, **kwargs):
         template_name = "reporte_pedidos.html"
-        fpedido_filtro = request.GET.get("txtfpedido")
+        fecha_filtro = request.GET.get("txtfpedido")
 
-        if not fpedido_filtro.isdigit():
+        fecha = datetime.strptime(fecha_filtro, "%Y-%m")
+        mes = str(fecha.month)
+        anio = fecha.year
+
+        if not mes.isdigit():
             return redirect('reportepedido')
 
-        today = datetime.now()
-        year = today.year
-        month = int(fpedido_filtro)
-
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value').filter(orden_pedido__fecha_Solicitud__year=year, orden_pedido__fecha_Solicitud__month=month).distinct()
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value').filter(orden_pedido__fecha_Solicitud__year=anio, orden_pedido__fecha_Solicitud__month=mes).distinct()
 
         if reporte:
             data = {
@@ -685,10 +705,9 @@ class generar_reporte_pedido(View):
 
         return redirect('reportepedido')
 
-
 class generar_reporte_pedido_total(View):
     def get_data_reporte(self, request):
-        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value').order_by('-value')
+        reporte = Articulo.objects.annotate(value=Sum(F('orden_pedido__cant_Solicitada'))).values('codigo','nombre','value','codigo_Modelo__nombre').order_by('-value')
         context = {"reporte": reporte}
         return context
 

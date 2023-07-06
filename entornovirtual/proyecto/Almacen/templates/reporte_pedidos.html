@@ -7,7 +7,9 @@
             <tr>
                 <th scope="col">Articulo</th>
                 <th scope="col">Nombre Articulo</th>
+                <th scope="col">Modelo de articulo</th>
                 <th scope="col">Cantidad Pedida</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -15,6 +17,7 @@
             <tr>
                 <td>{{ r.codigo }}</td>
                 <td>{{ r.nombre }}</td>
+                <td>{{ r.codigo_Modelo__nombre }}</td>
                 <td>{{ r.value }}</td>
             </tr>
             {% endfor %}

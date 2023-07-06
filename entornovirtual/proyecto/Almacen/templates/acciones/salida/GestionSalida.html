@@ -4,6 +4,13 @@
     <div class="col-4 pt-3">
         <h5 class="text-center">Registro de Salida de Articulos</h5>
         <hr>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <form action="/salida/registrarsalida" method="post">
             {% csrf_token %}
             <div class="row">
@@ -58,7 +65,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Articulo</th>
-                    <th scope="col">Cantidad Pedido</th>
+                    <th scope="col">Cantidad Salida</th>
                     <th scope="col">Fecha Salida</th>
                     <th scope="col">Encargado/Responsable</th>
                     <th scope="col" colspan="2">Acciones</th>

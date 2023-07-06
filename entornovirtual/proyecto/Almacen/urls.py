@@ -53,6 +53,7 @@ urlpatterns=[
 
     path('reporteingreso',views.reporteingreso,name='reporteingreso'),
     path('reportepedido',views.reportepedido,name='reportepedido'),
+    path("reporte/<codigo>",views.find_reporte,name="find_reporte"),
     path('reportesalida',views.reportesalida,name='reportesalida'),
     
 

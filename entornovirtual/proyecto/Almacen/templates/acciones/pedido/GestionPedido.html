@@ -13,12 +13,8 @@
                         <input type="text" name="txtCodigo" class="form-control">
                     </div><br>
                     <div>
-                        <select class="form-select" aria-label="Default select example" name="txtArticulo">
-                            <option selected>Articulos</option>
-                            {% for a in articulos %}
-                            <option value="{{a.codigo}}">{{a.nombre}} {{a.codigo_Modelo}}</option>
-                            {% endfor %}
-                        </select>
+                        <label><em>Articulo:</em></label>
+                        <input readonly type="text" name="txtArticulo" class="form-control" value="{{reporte.codigo}}" placeholder="{{reporte.nombre}} {{reporte.codigo_Modelo}}">
                     </div><br>
                     <div>
                         <label><em>Cantidad de pedido:</em></label>
